@@ -29,6 +29,28 @@ Enjoy!
 5. Make the chat look how you want it to look. Either select something from the Presets menu, or use the Fontificator Configuration window tabs to configure to your heart's content. There are many more games available on the Font/Border tab that don't have representation in the Preset menu.
 6. Click connect and enjoy.
 
+For support on Social Stream Ninja, join the [SSN Discord](https://discord.socialstream.ninja/).
+
+*****
+
+## Using with Social Stream Ninja
+
+Chat Game Fontificator includes an HTTP server that can receive messages from Social Stream Ninja. This allows you to use the application without connecting to Twitch IRC directly.
+
+1. Start the Chat Game Fontificator application
+2. In Social Stream Ninja, go to the Mechanics (⚙️) section
+3. Check the box next to "Send all to POST server"
+4. Enter `http://localhost:8888/message` in the text field
+5. Any chat messages captured by Social Stream Ninja will now be forwarded to Chat Game Fontificator
+
+The HTTP server accepts JSON messages with the following fields:
+- `chatname`: The username to display (required)
+- `chatmessage`: The message content (required)
+- `nameColor` or `color`: The color for the username (optional)
+- `type`: Message type - can be "NORMAL", "ACTION", or "JOIN" (optional, defaults to "NORMAL")
+
+Any additional fields in the JSON will be ignored.
+
 *****
 
 ## More Information for the Especially Curious
