@@ -34,12 +34,19 @@ public class FontificatorMain
 	 * 
 	 * @param bot The ChatViewerBot to send messages to
 	 * @param port The port to listen on
+	 * @param fProps The properties containing configuration
 	 */
-	private static void setupSocialStreamHttpServer(ChatViewerBot bot, int port) {
+	private static void setupSocialStreamHttpServer(ChatViewerBot bot, int port, FontificatorProperties fProps) {
 		try {
 			if (bot == null) {
 				logger.error("Cannot setup SocialStreamHttpServer: ChatViewerBot is null");
 				return;
+			}
+			
+			// Ensure bot has message config
+			if (bot.getMessageConfig() == null && fProps != null) {
+				bot.setMessageConfig(fProps.getMessageConfig());
+				logger.info("Set MessageConfig for ChatViewerBot");
 			}
 			
 			SocialStreamHttpServer server = new SocialStreamHttpServer(port, bot);
@@ -116,8 +123,17 @@ public class FontificatorMain
         // Give the debug tab to the chat panel, since it doesn't have a shared reference to a config object for the settings
         chatWindow.getChatPanel().setDebugSettings(controlWindow.getDebugPanel());
         
+        // Initialize ChatBot for the chat panel
+        if (chatWindow.getChatPanel().getChatBot() == null) {
+            logger.info("Creating new ChatViewerBot for ChatPanel");
+            ChatViewerBot chatBot = new ChatViewerBot();
+            chatBot.setChatPanel(chatWindow.getChatPanel());
+            chatWindow.getChatPanel().setChatBot(chatBot);
+        }
+        
         // Setup Social Stream HTTP server to receive messages from Social Stream Ninja
-        setupSocialStreamHttpServer(chatWindow.getChatPanel().getChatBot(), 8888);
+        logger.info("Setting up SocialStreamHttpServer...");
+		setupSocialStreamHttpServer(chatWindow.getChatPanel().getChatBot(), 8888, fProps);
 
         // Finally, display the chat and control windows now that everything has been constructed and connected
         chatWindow.setVisible(true);

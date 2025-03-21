@@ -85,20 +85,24 @@ public class SocialStreamHttpServer {
                     // Extract required fields with defaults if missing
                     String username = json.optString("chatname", "Guest");
                     String content = json.optString("chatmessage", "");
-                    String type = json.optString("type", "NORMAL");
                     
-                    // Map the type to a MessageType
+                    // Default to NORMAL if type is missing or invalid
+                    String typeStr = json.optString("type", "NORMAL").toUpperCase();
                     MessageType messageType = MessageType.NORMAL;
-                    if ("ACTION".equalsIgnoreCase(type)) {
-                        messageType = MessageType.ACTION;
-                    } else if ("JOIN".equalsIgnoreCase(type)) {
-                        messageType = MessageType.JOIN;
+                    try {
+                        if ("ACTION".equals(typeStr)) {
+                            messageType = MessageType.ACTION;
+                        } else if ("JOIN".equals(typeStr)) {
+                            messageType = MessageType.JOIN;
+                        }
+                    } catch (Exception e) {
+                        logger.warn("Invalid message type: " + typeStr + ", defaulting to NORMAL");
                     }
                     
                     // Create a TwitchPrivmsg object to hold message metadata
                     TwitchPrivmsg privmsg = new TwitchPrivmsg(username);
                     
-                    // Handle color property
+                    // Handle color property - check both nameColor and color fields
                     if (json.has("nameColor") || json.has("color")) {
                         try {
                             String colorStr = json.has("nameColor") ? 
@@ -106,7 +110,7 @@ public class SocialStreamHttpServer {
                                     json.optString("color", "");
                                     
                             if (colorStr != null && !colorStr.isEmpty()) {
-                                // Handle color names
+                                // Handle color names or hex values
                                 if (colorStr.startsWith("#")) {
                                     colorStr = colorStr.substring(1);
                                     privmsg.setColor(new java.awt.Color(Integer.parseInt(colorStr, 16)));
@@ -126,10 +130,7 @@ public class SocialStreamHttpServer {
                         }
                     }
                     
-                    // Double-check that chatBot is still not null before using it
-                    if (chatBot == null) {
-                        throw new IllegalStateException("ChatViewerBot became null before sending message");
-                    }
+                    // You could add additional processing here for any other fields you want to support
                     
                     // Send the message to chat
                     chatBot.sendMessageToChat(messageType, content, privmsg);

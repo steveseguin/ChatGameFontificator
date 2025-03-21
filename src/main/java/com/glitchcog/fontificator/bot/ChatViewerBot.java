@@ -536,61 +536,42 @@ public class ChatViewerBot extends PircBot
         return privmsg;
     }
 
-    /**
-     * This method is called whenever a message is sent to a channel.
-     * <p>
-     * The implementation of this method in the PircBot abstract class performs no actions and may be overridden as required.
-     *
-     * @param channel
-     *            The channel to which the message was sent.
-     * @param sender
-     *            The nick of the person who sent the message.
-     * @param login
-     *            The login of the person who sent the message.
-     * @param hostname
-     *            The hostname of the person who sent the message.
-     * @param message
-     *            The actual message sent to the channel.
-     */
-    @Override
-    protected void onMessage(String channel, String sender, String login, String hostname, String message)
-    {
-        TwitchPrivmsg privmsg = getPrivmsg(sender, null);
-        sendMessageToChat(message, privmsg);
-    }
 
-    /**
-     * Post a message to chat with just a username and message content, which defaults to a NORMAL type message
-     * 
-     * @param username
-     * @param message
-     * @param privmsg
-     */
-    public void sendMessageToChat(String message, TwitchPrivmsg privmsg)
-    {
-        sendMessageToChat(MessageType.NORMAL, message, privmsg);
-    }
+	/**
+	 * Get the message configuration
+	 * 
+	 * @return messageConfig
+	 */
+	public ConfigMessage getMessageConfig() {
+		return messageConfig;
+	}
+	
+	/**
+	 * Post a message to chat, specifying the message type, username, and message content
+	 * 
+	 * @param type
+	 * @param username
+	 * @param message
+	 * @param privmsg
+	 */
+	public void sendMessageToChat(MessageType type, String message, TwitchPrivmsg privmsg)
+	{
+		// Check if messageConfig is null
+		if (messageConfig == null) {
+			logger.error("MessageConfig is null! Cannot process message from: " + privmsg.getDisplayName());
+			messageConfig = new ConfigMessage(); // Create a default config to prevent errors
+		}
 
-    /**
-     * Post a message to chat, specifying the message type, username, and message content
-     * 
-     * @param type
-     * @param username
-     * @param message
-     * @param privmsg
-     */
-    public void sendMessageToChat(MessageType type, String message, TwitchPrivmsg privmsg)
-    {
-        String casedUsername = handleUsernameCasing(type, privmsg.getDisplayName(), message);
+		String casedUsername = handleUsernameCasing(type, privmsg.getDisplayName(), message);
 
-        // Update privmsg with name and post count increment
-        privmsg.setDisplayName(casedUsername);
-        privmsg.incrementPostCount();
+		// Update privmsg with name and post count increment
+		privmsg.setDisplayName(casedUsername);
+		privmsg.incrementPostCount();
 
-        // Finally, construct the message and send it on to the chat display
-        Message msg = new Message(type, casedUsername, message, privmsg);
-        chat.addMessage(msg);
-    }
+		// Finally, construct the message and send it on to the chat display
+		Message msg = new Message(type, casedUsername, message, privmsg);
+		chat.addMessage(msg);
+	}
 
     /**
      * Handles custom username casing
