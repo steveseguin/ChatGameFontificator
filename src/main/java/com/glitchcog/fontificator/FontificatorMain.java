@@ -1,5 +1,7 @@
 package com.glitchcog.fontificator;
 
+import java.io.IOException;
+
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
@@ -9,6 +11,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
+import com.glitchcog.fontificator.bot.ChatViewerBot;
 import com.glitchcog.fontificator.bot.SocialStreamHttpServer;
 import com.glitchcog.fontificator.config.FontificatorProperties;
 import com.glitchcog.fontificator.gui.chat.ChatWindow;
@@ -26,20 +29,28 @@ public class FontificatorMain
 
     public final static PatternLayout LOG_PATTERN_LAYOUT = new PatternLayout("[%p] %d{MM-dd-yyyy HH:mm:ss} %c %M - %m%n");
 
-    /**
-     * Setup the Social Stream HTTP server to receive messages from Social Stream Ninja
-     * 
-     * @param bot The ChatViewerBot to send messages to
-     * @param port The port to listen on
-     */
-    private static void setupSocialStreamHttpServer(ChatViewerBot bot, int port) {
-        try {
-            SocialStreamHttpServer server = new SocialStreamHttpServer(port, bot);
-            server.start();
-        } catch (IOException e) {
-            logger.error("Failed to start Social Stream HTTP server", e);
-        }
-    }
+	/**
+	 * Setup the Social Stream HTTP server to receive messages from Social Stream Ninja
+	 * 
+	 * @param bot The ChatViewerBot to send messages to
+	 * @param port The port to listen on
+	 */
+	private static void setupSocialStreamHttpServer(ChatViewerBot bot, int port) {
+		try {
+			if (bot == null) {
+				logger.error("Cannot setup SocialStreamHttpServer: ChatViewerBot is null");
+				return;
+			}
+			
+			SocialStreamHttpServer server = new SocialStreamHttpServer(port, bot);
+			server.start();
+			logger.info("Successfully started SocialStreamHttpServer on port " + port);
+		} catch (IOException e) {
+			logger.error("Failed to start Social Stream HTTP server", e);
+		} catch (Exception e) {
+			logger.error("Unexpected error setting up Social Stream HTTP server", e);
+		}
+	}
 
     /**
      * The main method for the program

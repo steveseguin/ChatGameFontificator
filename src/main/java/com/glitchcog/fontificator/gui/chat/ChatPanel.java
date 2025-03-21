@@ -36,6 +36,7 @@ import com.glitchcog.fontificator.gui.controls.panel.ControlPanelFont;
 import com.glitchcog.fontificator.gui.controls.panel.MessageCensorPanel;
 import com.glitchcog.fontificator.sprite.Sprite;
 import com.glitchcog.fontificator.sprite.SpriteFont;
+import com.glitchcog.fontificator.bot.ChatViewerBot;
 
 /**
  * This panel contains the entire visualization of the chat, so it handles all the drawing. It also handles scrolling
@@ -138,6 +139,33 @@ public class ChatPanel extends JPanel implements MouseWheelListener
      * Manages emoji loading, caching, and access
      */
     private EmojiManager emojiManager;
+	
+	/**
+	 * The IRC bot that interacts with the chat
+	 */
+	private ChatViewerBot chatBot;
+
+	/**
+	 * Initialize the ChatViewerBot for this panel
+	 * 
+	 * @param chatBot The ChatViewerBot to use
+	 */
+	public void setChatBot(ChatViewerBot chatBot) {
+		this.chatBot = chatBot;
+		logger.info("ChatBot set in ChatPanel: " + (chatBot != null));
+	}
+
+	/**
+	 * Get the ChatViewerBot for this panel
+	 * 
+	 * @return chatBot
+	 */
+	public ChatViewerBot getChatBot() {
+		if (chatBot == null) {
+			logger.error("getChatBot() called but chatBot is null");
+		}
+		return chatBot;
+	}
 
     /**
      * Construct the ChatPanel, which contains the entire visualization of the chat
