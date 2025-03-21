@@ -9,6 +9,7 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PatternLayout;
 
+import com.glitchcog.fontificator.bot.SocialStreamHttpServer;
 import com.glitchcog.fontificator.config.FontificatorProperties;
 import com.glitchcog.fontificator.gui.chat.ChatWindow;
 import com.glitchcog.fontificator.gui.controls.ControlWindow;
@@ -24,6 +25,21 @@ public class FontificatorMain
     private static final Logger logger = Logger.getLogger(FontificatorMain.class);
 
     public final static PatternLayout LOG_PATTERN_LAYOUT = new PatternLayout("[%p] %d{MM-dd-yyyy HH:mm:ss} %c %M - %m%n");
+
+    /**
+     * Setup the Social Stream HTTP server to receive messages from Social Stream Ninja
+     * 
+     * @param bot The ChatViewerBot to send messages to
+     * @param port The port to listen on
+     */
+    private static void setupSocialStreamHttpServer(ChatViewerBot bot, int port) {
+        try {
+            SocialStreamHttpServer server = new SocialStreamHttpServer(port, bot);
+            server.start();
+        } catch (IOException e) {
+            logger.error("Failed to start Social Stream HTTP server", e);
+        }
+    }
 
     /**
      * The main method for the program
@@ -88,6 +104,9 @@ public class FontificatorMain
 
         // Give the debug tab to the chat panel, since it doesn't have a shared reference to a config object for the settings
         chatWindow.getChatPanel().setDebugSettings(controlWindow.getDebugPanel());
+        
+        // Setup Social Stream HTTP server to receive messages from Social Stream Ninja
+        setupSocialStreamHttpServer(chatWindow.getChatPanel().getChatBot(), 8888);
 
         // Finally, display the chat and control windows now that everything has been constructed and connected
         chatWindow.setVisible(true);
@@ -107,7 +126,5 @@ public class FontificatorMain
         {
             logger.error("Unable to display control window on initialization", e);
         }
-
     }
-
 }
