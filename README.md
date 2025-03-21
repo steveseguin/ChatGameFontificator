@@ -35,7 +35,7 @@ Enjoy!
 
 ## Using with Social Stream Ninja
 
-Chat Game Fontificator includes an HTTP server that can receive messages from Social Stream Ninja. This allows you to use the application without connecting to Twitch IRC directly.
+Chat Game Fontificator includes an HTTP server that can receive messages from [Social Stream Ninja](https://socialstream.ninja). This allows you to use the application with hundreds of other chat sources; not just Twitch!
 
 1. Start the Chat Game Fontificator application
 2. In Social Stream Ninja, go to the Mechanics (⚙️) section
