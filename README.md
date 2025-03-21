@@ -1,3 +1,5 @@
+**[➡️ Using with Social Stream Ninja](#using-with-social-stream-ninja)**
+
 # Chat Game Fontificator [[Download](../../raw/master/jar/ChatGameFontificator.jar)] 
 
 The Chat Game Fontificator is a Twitch chat display that visually imitates the text boxes from various video games. Its intended use is as a part of a Twitch video game stream in place of less pretty chat windows.
