@@ -29,8 +29,6 @@ Enjoy!
 5. Make the chat look how you want it to look. Either select something from the Presets menu, or use the Fontificator Configuration window tabs to configure to your heart's content. There are many more games available on the Font/Border tab that don't have representation in the Preset menu.
 6. Click connect and enjoy.
 
-For support on Social Stream Ninja, join the [SSN Discord](https://discord.socialstream.ninja/).
-
 *****
 
 ## Using with Social Stream Ninja
@@ -50,6 +48,10 @@ The HTTP server accepts JSON messages with the following fields:
 - `type`: Message type - can be "NORMAL", "ACTION", or "JOIN" (optional, defaults to "NORMAL")
 
 Any additional fields in the JSON will be ignored.
+
+For support on Social Stream Ninja, join the [SSN Discord](https://discord.socialstream.ninja/).
+
+![image](https://github.com/user-attachments/assets/6462afb7-3215-4892-8aaf-debf476763d0)
 
 *****
 
