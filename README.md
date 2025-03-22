@@ -42,6 +42,7 @@ Chat Game Fontificator includes an HTTP server that can receive messages from [S
 3. Check the box next to "Send all to POST server"
 4. Enter `http://localhost:8888/message` in the text field
 5. Any chat messages captured by Social Stream Ninja will now be forwarded to Chat Game Fontificator
+6. To remove HTML from messages, enable `Strip HTML/Images from messages and donations" also.
 
 The HTTP server accepts JSON messages with the following fields:
 - `chatname`: The username to display (required)
@@ -54,6 +55,9 @@ Any additional fields in the JSON will be ignored.
 For support on Social Stream Ninja, join the [SSN Discord](https://discord.socialstream.ninja/).
 
 ![image](https://github.com/user-attachments/assets/6462afb7-3215-4892-8aaf-debf476763d0)
+
+![image](https://github.com/user-attachments/assets/cc946b38-21b1-4631-bbcc-fa0f97e19776)
+
 
 *****
 
