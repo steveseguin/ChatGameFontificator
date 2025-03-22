@@ -48,7 +48,6 @@ The HTTP server accepts JSON messages with the following fields:
 - `chatname`: The username to display (required)
 - `chatmessage`: The message content (required)
 - `nameColor` or `color`: The color for the username (optional)
-- `type`: Message type - can be "NORMAL", "ACTION", or "JOIN" (optional, defaults to "NORMAL")
 
 Any additional fields in the JSON will be ignored.
 
