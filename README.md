@@ -56,8 +56,7 @@ For support on Social Stream Ninja, join the [SSN Discord](https://discord.socia
 
 ![image](https://github.com/user-attachments/assets/6462afb7-3215-4892-8aaf-debf476763d0)
 
-![image](https://github.com/user-attachments/assets/cc946b38-21b1-4631-bbcc-fa0f97e19776)
-
+![image](https://github.com/user-attachments/assets/e4acdd3f-2f0a-45c4-b85b-958e80bbe3c2)
 
 *****
 
